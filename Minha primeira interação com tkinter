@@ -1,0 +1,153 @@
+import tkinter as tk
+import random as ra
+'''
+Criando uma janela com um titulo:
+
+janela = tk.Tk()
+janela.title("Minha primeira janela")
+janela.mainloop()
+'''
+#########################################################################
+'''
+Criando uma janela com um texto:
+
+janela = tk.Tk()
+janela.title('Aprendendo a somar')
+
+texto = tk.Label(janela, text='Quanto é:')
+texto.pack()
+
+janela.mainloop()
+'''
+#########################################################################
+'''
+Criando uma janela com um botão:
+
+def apertou():
+    print('Você clicou no botão!')
+    
+
+janela = tk.Tk()
+
+botao = tk.Button(janela, text='Clique aqui', command=apertou)
+botao.pack()
+
+janela.mainloop()
+'''
+#########################################################################
+'''
+Criando uma janela com uma entrada de texto:
+
+def mostrar():
+    print("Você digitou:", entrada.get())
+
+janela = tk.Tk()
+
+entrada = tk.Entry(janela)
+entrada.pack()
+
+botao = tk.Button(janela, text='Enviar', command=mostrar)
+botao.pack()
+
+janela.mainloop()
+'''
+##########################################################################
+'''
+Criando uma janela com uma entrada de texto e escolha, mostrando na interface.
+
+def acerto():
+    texto.config(text=f'parabéns era mesmo {entrada.get()}')
+def calculando():
+    if int(entrada.get()) == 5:
+        acerto()
+    else:
+        erro()
+def erro():
+    texto.config(text=f'que pena, não era {entrada.get()}')
+
+janela = tk.Tk()
+
+texto = tk.Label(janela, text='Quanto é:')
+texto.pack()
+
+entrada= tk.Entry(janela)
+entrada.pack()
+
+botao = tk.Button(janela, text="Enviar", command=calculando)
+botao.pack()
+
+janela.mainloop()
+'''
+######################################################################
+def operacao():
+    n1 = ra.randint(1, 1000)
+    n2 = ra.randint(1, 1000)
+    op = ra.choice(['+', '-', '*', '/'])
+
+    if  op == '/':
+        while n1 % n2 != 0:
+            n1 = ra.randint(1, 1000)
+            n2 = ra.randint(1, 1000)
+    global num1, num2, ope
+    num1 = n1
+    num2 = n2
+    ope = op
+    try:
+        escolha = int(entrada.get())
+    except:
+        borda1.config(text='======================================')
+        texto.config(text='Digite um número válido! 1:sim e 2:não')
+        borda2.config(text='======================================')
+        return
+
+    if escolha == 1:
+        borda1.config(text='==============================')
+        texto.config(text=f'Quanto é: {num1} {ope} {num2}')
+        borda2.config(text='==============================')
+
+        botao.config(text='enviar resposta', command=resultado)
+        entrada.delete(0, 'end')
+    else:
+        janela.destroy()
+        
+def resultado():
+    global num1, num2, ope
+    resultado = eval(f'{num1}{ope}{num2}')
+    try:
+        calculando = int(entrada.get())
+    except:
+        borda1.config(text='====================================================')
+        texto.config(text=f'Digite um número válido! Quanto é {num1}{ope}{num2}')
+        borda2.config(text='====================================================')
+        return
+    
+    if calculando == resultado:
+        borda1.config(text='======================================================================================')
+        texto.config(text=f'Parabens! {num1}{ope}{num2} é igual a {resultado}, quer tentar de novo? 1:sim e 2:não')
+        borda2.config(text='======================================================================================')
+
+        botao.config(text='Escolha', command=operacao)
+        entrada.delete(0, 'end')
+    else:
+        borda1.config(text='======================================================================================')
+        texto.config(text=f'Que pena, você errou ;-;. Quer tentar de novo? 1:sim e 2:não')
+        borda2.config(text='======================================================================================')
+
+        botao.config(text='Escolha', command=operacao)
+        entrada.delete(0, 'end')
+
+janela = tk.Tk()
+
+borda1 = tk.Label(janela, text='===========================================')
+borda1.pack()
+texto = tk.Label(janela, text='Quer brincar de fazer contas? 1:sim e 2:não')
+texto.pack()
+borda2 = tk.Label(janela, text='===========================================')
+borda2.pack()
+
+entrada = tk.Entry(janela)
+entrada.pack()
+
+botao = tk.Button(janela, text='Escolha', command=operacao)
+botao.pack()
+entrada.delete(0, 'end')
